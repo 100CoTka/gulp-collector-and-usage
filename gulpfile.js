@@ -59,8 +59,16 @@ function browserSyncReload(done) {
 
 
 function html() {
+	panini.refresh();
 	return src(path.src.html, { base: './src/' })
 		.pipe(plumber())
+		.pipe(panini({
+			root: 'src/',
+			layouts: 'src/tpl/layouts/',
+			partials: 'src/tpl/partials/',
+			helpers: 'src/tpl/helpers/',
+			data: 'src/tpl/data/'
+		}))
 		.pipe(dest(path.build.html))
 		.pipe(browsersync.stream());
 }
